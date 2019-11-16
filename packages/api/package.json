@@ -1,0 +1,28 @@
+{
+  "name": "@ballpit/api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node .",
+    "start:dev": "ts-node-dev src/index.ts",
+    "prestart": "npm run build",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ballpit/common": "^1.0.0",
+    "express": "^4.17.1",
+    "express-sse": "^0.5.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/uuid": "^3.4.6",
+    "ts-node": "^8.5.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.2"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@ballpit/app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "webpack-dev-server --watch --content-base src/",
+    "build": "webpack --config webpack.config.js --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "matter-js": "^0.14.2"
+  },
+  "devDependencies": {
+    "@types/matter-js": "^0.10.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
