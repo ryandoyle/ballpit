@@ -2,6 +2,7 @@ import {Bodies, Body, Engine, World} from "matter-js";
 import {Wall} from "./Wall";
 import {Entity} from "./Entity";
 import {BallEngine} from "./BallEngine";
+import {Ball} from "./Ball";
 
 const engine = Engine.create();
 // const render = Render.create({
@@ -16,15 +17,6 @@ const engine = Engine.create();
 // });
 
 
-const boxA = Bodies.rectangle(400, 200, 80, 80);
-const boxB = Bodies.circle(450, 50, 80, {
-    render: {
-        fillStyle: "red",
-        strokeStyle: "blue",
-        lineWidth: 3
-    }
-
-});
 const ground = Bodies.rectangle(800, 610, 810, 60, {isStatic: true});
 
 const sse = new EventSource("/api/events");
@@ -38,21 +30,6 @@ interface EventMessage {
 }
 
 
-sse.onmessage = (ev) => {
-    const message = <EventMessage>JSON.parse(ev.data);
-
-    const ball = Bodies.circle(450, 50, 10, {
-        render: {
-            fillStyle: "red",
-            strokeStyle: "blue",
-            lineWidth: 3
-        }
-    });
-    World.add(engine.world, ball);
-    Body.applyForce(ball, ball.position, {x: -0.01, y: 0});
-
-    console.log(message);
-};
 
 
 setInterval(() => {
@@ -62,9 +39,10 @@ setInterval(() => {
 }, 100);
 
 
-World.add(engine.world, [boxA, boxB, ground]);
+World.add(engine.world, [ground]);
 Engine.run(engine);
 // Render.run(render);
+
 
 
 
@@ -79,8 +57,30 @@ canvas.height = 800;
 document.body.appendChild(canvas);
 
 const ballEngine: BallEngine = new BallEngine(engine, ctx, 1000, 800);
-const wall: Entity = new Wall({width: 200, x: 200, y: 400, height: 500});
+const wall: Entity = new Wall({width: 200, x: 150, y: 300, height: 500});
 ballEngine.addEntity(wall);
+
+
+
+sse.onmessage = (ev) => {
+    const message = <EventMessage>JSON.parse(ev.data);
+
+    // const ball = Bodies.circle(450, 50, 10, {
+    //     render: {
+    //         fillStyle: "red",
+    //         strokeStyle: "blue",
+    //         lineWidth: 3
+    //     }
+    // });
+
+    const ball = new Ball(450, 50, 10);
+    ballEngine.addEntity(ball);
+    ball.push();
+
+
+    // console.log(message);
+};
+
 
 
 (function render() {
