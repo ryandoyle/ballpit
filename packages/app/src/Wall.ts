@@ -1,4 +1,4 @@
-import {Bodies, Body} from "matter-js";
+import {Bodies, Body, World} from "matter-js";
 import {Entity} from "./Entity";
 
 export interface ConstructorParams {
@@ -31,10 +31,18 @@ export class Wall implements Entity {
     }
 
     update(): void {
+        // TODO: loop over composites
     }
 
-    getPhysicsBodies(): Array<Body> {
-        return [this.physicsBody];
+
+    addSelfTo(world: Matter.World) {
+        World.add(world, this.physicsBody);
     }
+
+    removeSelfFrom(world: Matter.World) {
+        World.remove(world, this.physicsBody);
+    }
+
+
 
 }

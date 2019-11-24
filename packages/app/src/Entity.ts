@@ -1,9 +1,13 @@
-import {Body} from "matter-js";
+import {Bounds, World} from "matter-js";
+import {Composite} from "./Composite";
 
 export interface Entity {
     draw(canvas: CanvasRenderingContext2D);
 
-    update();
+    update(parent: Composite, bounds: Bounds);
 
-    getPhysicsBodies(): Array<Body>;
+    removeSelfFrom(world: World);
+
+    addSelfTo(world: World);
+
 }

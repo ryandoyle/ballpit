@@ -1,5 +1,3 @@
-* Remove objects when they go off the screen
-* Colour balls
 * Reload app when server cookies don't match
 * Share common module with hot reloading?
 * dist packaging

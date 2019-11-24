@@ -1,7 +1,7 @@
-import {Bodies, Body, Engine, World} from "matter-js";
+import {Bodies, Engine, World} from "matter-js";
 import {Wall} from "./Wall";
 import {Entity} from "./Entity";
-import {BallEngine} from "./BallEngine";
+import {BallScene} from "./BallScene";
 import {Ball} from "./Ball";
 
 const engine = Engine.create();
@@ -56,7 +56,7 @@ canvas.width = 1000;
 canvas.height = 800;
 document.body.appendChild(canvas);
 
-const ballEngine: BallEngine = new BallEngine(engine, ctx, 1000, 800);
+const ballEngine: BallScene = new BallScene(engine, ctx, 1000, 800);
 const wall: Entity = new Wall({width: 200, x: 150, y: 300, height: 500});
 ballEngine.addEntity(wall);
 

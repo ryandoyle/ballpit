@@ -28,4 +28,4 @@ const appCookie = uuid.v1();
 
 setInterval(() => {
     sse.send({cookie: appCookie, eventBlock: "Controller", eventName: "Login"})
-}, 1000);
+}, 100);

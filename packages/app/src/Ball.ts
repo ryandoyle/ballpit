@@ -1,5 +1,6 @@
 import {Entity} from "./Entity";
-import {Bodies, Body} from "matter-js";
+import {Bodies, Body, Bounds, World} from "matter-js";
+import {Composite} from "./Composite";
 
 export class Ball implements Entity {
 
@@ -8,6 +9,14 @@ export class Ball implements Entity {
 
     constructor(x: number, y: number, radius: number) {
         this.body = Bodies.circle(x, y, radius, {restitution: 0.7});
+    }
+
+    removeSelfFrom(world: World) {
+        World.remove(world, this.body);
+    }
+
+    addSelfTo(world: World) {
+        World.add(world, this.body);
     }
 
     push() {
@@ -22,11 +31,10 @@ export class Ball implements Entity {
         canvas.stroke();
     }
 
-    getPhysicsBodies(): Array<Body> {
-        return [this.body];
-    }
-
-    update() {
+    update(parent: Composite, bounds: Bounds) {
+        if (!Bounds.overlaps(this.body.bounds, bounds)) {
+            parent.removeEntity(this);
+        }
     }
 
 }
