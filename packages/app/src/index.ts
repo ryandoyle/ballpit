@@ -65,17 +65,13 @@ ballEngine.addEntity(wall);
 sse.onmessage = (ev) => {
     const message = <EventMessage>JSON.parse(ev.data);
 
-    // const ball = Bodies.circle(450, 50, 10, {
-    //     render: {
-    //         fillStyle: "red",
-    //         strokeStyle: "blue",
-    //         lineWidth: 3
-    //     }
-    // });
-
-    const ball = new Ball(450, 50, 10);
-    ballEngine.addEntity(ball);
-    ball.push();
+    // The rendering loop is paused when the browser isn't active. If we keep adding heaps of balls, it kills
+    // the page when we try to render. Not sure if it's the physics engine or my rendering code.
+    if (document.visibilityState === "visible") {
+        const ball = new Ball(450, 50, 10);
+        ballEngine.addEntity(ball);
+        ball.push();
+    }
 
 
     // console.log(message);
