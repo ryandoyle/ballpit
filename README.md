@@ -1,5 +1,5 @@
 ## BallPit
-[glTail.rb](https://github.com/Fudge/gltail) inspired webapp
+[glTail.rb](https://github.com/Fudge/gltail) inspired webapp. Still a WIP.
 
 #### Run dev
 * Install Lerna
