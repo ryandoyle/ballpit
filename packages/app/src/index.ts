@@ -56,9 +56,9 @@ canvas.width = 1000;
 canvas.height = 800;
 document.body.appendChild(canvas);
 
-const ballEngine: BallScene = new BallScene(engine, ctx, 1000, 800);
+const ballScene: BallScene = new BallScene(engine, ctx, 1000, 800);
 const wall: Entity = new Wall({width: 200, x: 150, y: 300, height: 500});
-ballEngine.addEntity(wall);
+ballScene.addEntity(wall);
 
 
 
@@ -69,7 +69,7 @@ sse.onmessage = (ev) => {
     // the page when we try to render. Not sure if it's the physics engine or my rendering code.
     if (document.visibilityState === "visible") {
         const ball = new Ball(450, 50, 10);
-        ballEngine.addEntity(ball);
+        ballScene.addEntity(ball);
         ball.push();
     }
 
@@ -80,7 +80,7 @@ sse.onmessage = (ev) => {
 
 
 (function render() {
-    ballEngine.update();
-    ballEngine.draw();
+    ballScene.update();
+    ballScene.draw();
     window.requestAnimationFrame(render);
 })();
