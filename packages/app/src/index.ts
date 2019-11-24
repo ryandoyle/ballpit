@@ -3,6 +3,7 @@ import {Wall} from "./Wall";
 import {Entity} from "./Entity";
 import {BallScene} from "./BallScene";
 import {Ball} from "./Ball";
+import {EventBlock} from "./EventBlock";
 
 const engine = Engine.create();
 // const render = Render.create({
@@ -60,7 +61,9 @@ const ballScene: BallScene = new BallScene(engine, ctx, 1000, 800);
 const wall: Entity = new Wall({width: 200, x: 150, y: 300, height: 500});
 ballScene.addEntity(wall);
 
-
+// testing
+const eventBlock = new EventBlock("My Events", 200, {x: 300, y: 300}, "right");
+ballScene.addEntity(eventBlock);
 
 sse.onmessage = (ev) => {
     const message = <EventMessage>JSON.parse(ev.data);
