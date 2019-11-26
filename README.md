@@ -3,5 +3,5 @@
 
 #### Run dev
 * Install Lerna
-* `npm install` in each `packages/` directory. Can Lerna do this?
+* `lerna bootstrap`
 * `lerna run start:dev --stream`
