@@ -64,6 +64,8 @@ ballScene.addEntity(wall);
 // testing
 const eventBlock = new EventBlock("My Events", 200, {x: 300, y: 300}, "right");
 ballScene.addEntity(eventBlock);
+eventBlock.emitEvent("event1");
+eventBlock.emitEvent("event2");
 
 sse.onmessage = (ev) => {
     const message = <EventMessage>JSON.parse(ev.data);
