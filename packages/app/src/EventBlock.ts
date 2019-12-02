@@ -2,6 +2,7 @@ import {Entity} from "./Entity";
 import {Composite} from "./Composite";
 import {Bounds, Vector, World} from "matter-js";
 import {EventBlockElement} from "./EventBlockElement";
+import {BallScene} from "./BallScene";
 
 export type Alignment = "left" | "right";
 
@@ -20,25 +21,27 @@ export class EventBlock implements Entity, Composite {
     private height: number;
     private textSize: number;
     private elements: Array<EventBlockElement> = new Array<EventBlockElement>();
+    private ballScene: BallScene;
 
-    constructor(name: string, width: number, position: Vector, alignment: Alignment, textSize: number = 12) {
+    constructor(name: string, width: number, position: Vector, alignment: Alignment, textSize: number = 12, ballScene: BallScene) {
         this.position = position;
         this.name = name;
         this.width = width;
         this.alignment = alignment;
         this.textSize = textSize;
+        this.ballScene = ballScene;
         this.height = textSize + (textSize/3); // Add extra depth for "y,g" etc...
     }
 
     emitEvent(eventName: string) {
         let element: EventBlockElement = this.elements.find(e => e.name === eventName);
         if (element === undefined) {
-            element = new EventBlockElement(eventName, this.alignment, this.textSize, this.position.x, this.width);
+            element = new EventBlockElement(eventName, this.alignment, this.textSize, this.position.x,
+                this.width, this.ballScene, this.position.y + this.height + this.elements.length * this.textSize);
             this.elements.push(element);
         }
         element.emitEvent()
     }
-
     addSelfTo(world: World) {
     }
 
@@ -66,7 +69,7 @@ export class EventBlock implements Entity, Composite {
 
     update(parent: Composite, bounds: Bounds) {
         this.elements.forEach((e, index) => {
-            e.yPosition = this.position.x + e.height + e.height * index;
+            e.yPosition = this.position.y + e.height + e.height * index;
             e.update(this, bounds);
         })
     }

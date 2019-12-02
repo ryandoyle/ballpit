@@ -19,8 +19,11 @@ export class Ball implements Entity {
         World.add(world, this.body);
     }
 
-    push() {
-        Body.applyForce(this.body, this.body.position, {x: -0.01, y: 0});
+    pushLeft() {
+        Body.applyForce(this.body, this.body.position, {x: -0.005, y: 0});
+    }
+    pushRight() {
+        Body.applyForce(this.body, this.body.position, {x: 0.005, y: 0});
     }
 
     draw(canvas: CanvasRenderingContext2D) {

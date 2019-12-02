@@ -62,10 +62,15 @@ const wall: Entity = new Wall({width: 200, x: 150, y: 300, height: 500});
 ballScene.addEntity(wall);
 
 // testing
-const eventBlock = new EventBlock("My Events", 200, {x: 300, y: 300}, "right");
+const eventBlock = new EventBlock("My Events", 200, {x: 300, y: 300}, "right", 12, ballScene);
 ballScene.addEntity(eventBlock);
-eventBlock.emitEvent("event1");
+setInterval(() => eventBlock.emitEvent("event1"), 300);
 eventBlock.emitEvent("event2");
+
+const eventBlock2 = new EventBlock("My Events", 200, {x: 700, y: 300}, "left", 12, ballScene);
+ballScene.addEntity(eventBlock2);
+setInterval(() => eventBlock2.emitEvent("event11"), 500);
+eventBlock2.emitEvent("event22");
 
 sse.onmessage = (ev) => {
     const message = <EventMessage>JSON.parse(ev.data);
@@ -75,7 +80,7 @@ sse.onmessage = (ev) => {
     if (document.visibilityState === "visible") {
         const ball = new Ball(450, 50, 10);
         ballScene.addEntity(ball);
-        ball.push();
+        ball.pushLeft();
     }
 
 

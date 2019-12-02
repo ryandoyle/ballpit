@@ -1,6 +1,8 @@
 import {Entity} from "./Entity";
 import {Composite} from "./Composite";
 import {Alignment} from "./EventBlock";
+import {BallScene} from "./BallScene";
+import {Ball} from "./Ball";
 
 export class EventBlockElement implements Entity {
     get height(): number {
@@ -13,14 +15,17 @@ export class EventBlockElement implements Entity {
     private textSize: number;
     yPosition: number;
     private xPosition: number;
+    private ballScene: BallScene;
 
 
-    constructor(name: string, alignment: Alignment, textSize: number, xPosition: number, width: number) {
+    constructor(name: string, alignment: Alignment, textSize: number, xPosition: number, width: number, ballScene: BallScene, yPosition: number) {
         this._name = name;
         this.alignment = alignment;
         this.textSize = textSize;
         this.xPosition = xPosition;
         this.width = width;
+        this.ballScene = ballScene;
+        this.yPosition = yPosition;
         this._height = textSize + (textSize / 3);
     }
 
@@ -54,7 +59,21 @@ export class EventBlockElement implements Entity {
     update(parent: Composite, bounds: Matter.Bounds) {
     }
 
+    private middleYPosition(): number {
+        return this.yPosition + (this._height / 2)
+    }
+
+    private xPositionOfEmittingSide(): number {
+        return this.alignment === "left" ? this.xPosition : this.xPosition + this.width;
+    }
+
     emitEvent() {
-        console.log(`Emitting event ${this.name}`)
+        const ball = new Ball(this.xPositionOfEmittingSide(), this.middleYPosition(), 8);
+        this.ballScene.addEntity(ball);
+        if (this.alignment === "left") {
+            ball.pushLeft();
+        } else {
+            ball.pushRight();
+        }
     }
 }
