@@ -16,6 +16,8 @@ export class EventBlockElement implements Entity {
     yPosition: number;
     private xPosition: number;
     private ballScene: BallScene;
+    private colour = "#00ff00";
+    private backgroundAlpha = 0.0;
 
 
     constructor(name: string, alignment: Alignment, textSize: number, xPosition: number, width: number, ballScene: BallScene, yPosition: number) {
@@ -39,10 +41,12 @@ export class EventBlockElement implements Entity {
     draw(canvas: CanvasRenderingContext2D) {
         canvas.beginPath();
         canvas.rect(this.xPosition, this.yPosition, this.width, this._height);
-        canvas.fillStyle = "green";
+        canvas.fillStyle = this.colour;
+        canvas.globalAlpha = this.backgroundAlpha;
         canvas.fill();
+        canvas.globalAlpha = 1.0;
         // Text
-        canvas.fillStyle = "black";
+        canvas.fillStyle = "white";
         canvas.textAlign = this.alignment;
         canvas.font = `${this.textSize}px monospace`;
         if (this.alignment === "right") {
@@ -57,6 +61,10 @@ export class EventBlockElement implements Entity {
     }
 
     update(parent: Composite, bounds: Matter.Bounds) {
+        this.backgroundAlpha -= 0.01;
+        if (this.backgroundAlpha < 0.0) {
+            this.backgroundAlpha = 0.0;
+        }
     }
 
     private middleYPosition(): number {
@@ -68,12 +76,18 @@ export class EventBlockElement implements Entity {
     }
 
     emitEvent() {
-        const ball = new Ball(this.xPositionOfEmittingSide(), this.middleYPosition(), 8);
+        // Don't accumulate events if the window isn't being viewed
+        if (document.visibilityState !== "visible") {
+            return
+        }
+        const ball = new Ball(this.xPositionOfEmittingSide(), this.middleYPosition(), 8, this.colour);
         this.ballScene.addEntity(ball);
         if (this.alignment === "left") {
             ball.pushLeft();
         } else {
             ball.pushRight();
         }
+        // Raise the background alpha, making the block visible when the event is emitted
+        this.backgroundAlpha = 0.3;
     }
 }

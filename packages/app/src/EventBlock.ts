@@ -49,7 +49,7 @@ export class EventBlock implements Entity, Composite {
         const elementHeights = this.elements.reduce((acc, e) => e.height + acc, 0);
         canvas.beginPath();
         canvas.rect(this.position.x, this.position.y, this.width, this.height + elementHeights);
-        canvas.fillStyle = "red";
+        canvas.fillStyle = "#222222";
         canvas.fill();
         // Text
         canvas.fillStyle = "blue";

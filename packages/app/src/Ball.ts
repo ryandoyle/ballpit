@@ -6,9 +6,11 @@ export class Ball implements Entity {
 
 
     private body: Matter.Body;
+    private colour: string;
 
-    constructor(x: number, y: number, radius: number) {
+    constructor(x: number, y: number, radius: number, colour: string) {
         this.body = Bodies.circle(x, y, radius, {restitution: 0.7});
+        this.colour = colour;
     }
 
     removeSelfFrom(world: World) {
@@ -30,7 +32,7 @@ export class Ball implements Entity {
         const {x, y} = this.body.position;
         canvas.beginPath();
         canvas.arc(x, y, this.body.circleRadius, 0, Math.PI * 2);
-        canvas.strokeStyle = "#ff0000";
+        canvas.strokeStyle = this.colour;
         canvas.stroke();
     }
 

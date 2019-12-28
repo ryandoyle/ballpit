@@ -32,7 +32,8 @@ export class BallScene implements Entity, Composite {
     }
 
     draw() {
-        this.canvas.clearRect(0, 0, this.width, this.height);
+        this.canvas.fillStyle = "#111111";
+        this.canvas.fillRect(0, 0, this.width, this.height);
         this.entities.forEach(e => e.draw(this.canvas));
     }
 
